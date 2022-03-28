@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import 'package:metaweather/core/api/end_points.dart';
 import 'package:metaweather/core/utils/assets.dart';
 import 'package:metaweather/core/utils/textstyle.dart';
 import 'package:metaweather/features/forecast/logic/forecast_notifier.dart';
 import 'package:metaweather/features/forecast/ui/widgets/forecast_button.dart';
+import 'package:provider/provider.dart';
 
 class ForecastPage extends StatefulWidget {
   final String cityId;
@@ -21,7 +22,9 @@ class _ForecastPageState extends State<ForecastPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ForecastNotifier>().fetchForecast(cityId: widget.cityId);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      context.read<ForecastNotifier>().fetchForecast(cityId: widget.cityId);
+    });
   }
 
   String _windSpeed(double? windSpeed) {

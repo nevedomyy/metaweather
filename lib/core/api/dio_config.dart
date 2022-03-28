@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:metaweather/core/api/dio_interceptors.dart';
 import 'package:metaweather/core/services/storage.dart';
 
 import 'end_points.dart';
@@ -16,12 +17,9 @@ class DioConfig {
         baseUrl: EndPoints.baseUrl,
         connectTimeout: 8000,
         receiveTimeout: 5000,
-        followRedirects: false,
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json, text/plain, */*',
-        },
       ),
-    );
+    )..interceptors.add(
+        LoggerInterceptor(),
+      );
   }
 }
