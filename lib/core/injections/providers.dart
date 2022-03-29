@@ -28,7 +28,7 @@ class _AppProvidersState extends State<AppProviders> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<ForecastNotifier>(
           create: (_) => ForecastNotifierImpl(
             repository: ForecastRepositoryImpl(
               apiProvider: context.apiProvider,

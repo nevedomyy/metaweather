@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:metaweather/features/forecast/models/forecast.dart';
 import 'package:metaweather/features/forecast/repositories/forecast_repository.dart';
 
-abstract class ForecastNotifier {
+abstract class ForecastNotifier with ChangeNotifier {
   Future<void> fetchForecast({required String cityId});
   Forecast? get forecast;
   bool get isLoading;
 }
 
-class ForecastNotifierImpl extends ChangeNotifier implements ForecastNotifier {
+class ForecastNotifierImpl with ChangeNotifier implements ForecastNotifier {
   final ForecastRepository repository;
   Forecast? _forecast;
   bool _isLoading = false;

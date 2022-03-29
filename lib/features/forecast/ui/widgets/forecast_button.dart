@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metaweather/features/forecast/logic/forecast_notifier.dart';
-import 'package:provider/provider.dart' show Consumer;
+import 'package:provider/provider.dart';
 
 class ForecastButton extends StatelessWidget {
   final VoidCallback? onTap;
@@ -9,15 +9,13 @@ class ForecastButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.watch<ForecastNotifier>().isLoading;
+
     return FloatingActionButton(
       onPressed: onTap,
-      child: Consumer<ForecastNotifier>(
-        builder: (context, state, child) {
-          return state.isLoading
-              ? const CircularProgressIndicator()
-              : const Icon(Icons.air, size: 30);
-        },
-      ),
+      child: isLoading
+          ? const CircularProgressIndicator()
+          : const Icon(Icons.air, size: 30),
     );
   }
 }
