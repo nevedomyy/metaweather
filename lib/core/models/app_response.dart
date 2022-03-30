@@ -5,9 +5,9 @@ import 'package:metaweather/core/services/logger.dart';
 
 class AppResponse {
   final dynamic object;
-  final String? errorMessage;
+  final String errorMessage;
 
-  const AppResponse({this.object, this.errorMessage});
+  const AppResponse({this.object, this.errorMessage = ''});
 
   factory AppResponse.success(dynamic object) {
     return AppResponse(object: object);

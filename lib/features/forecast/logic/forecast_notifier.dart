@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:metaweather/core/global/wrapper.dart';
 import 'package:metaweather/features/forecast/models/forecast.dart';
 import 'package:metaweather/features/forecast/repositories/forecast_repository.dart';
 
@@ -8,30 +9,25 @@ abstract class ForecastNotifier with ChangeNotifier {
   bool get isLoading;
 }
 
-class ForecastNotifierImpl with ChangeNotifier implements ForecastNotifier {
+class ForecastNotifierImpl extends AppChangeNotifier
+    implements ForecastNotifier {
   final ForecastRepository repository;
   Forecast? _forecast;
-  bool _isLoading = false;
 
   ForecastNotifierImpl({required this.repository});
 
   @override
   Future<void> fetchForecast({required String cityId}) async {
-    _isLoading = true;
-    notifyListeners();
-    final data = await repository.fetchForecast(cityId: cityId);
-    if (data.object != null) {
-      _forecast = data.object;
-    } else {
-      // TODO: data.errorMessage
-    }
-    _isLoading = false;
-    notifyListeners();
+    funcWithLoader(() async {
+      final data = await repository.fetchForecast(cityId: cityId);
+      if (data.object != null) {
+        _forecast = data.object;
+      } else if (data.errorMessage.isNotEmpty) {
+        showSnackBar(data.errorMessage);
+      }
+    });
   }
 
   @override
   Forecast? get forecast => _forecast;
-
-  @override
-  bool get isLoading => _isLoading;
 }
