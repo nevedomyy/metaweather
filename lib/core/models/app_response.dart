@@ -42,6 +42,8 @@ class AppResponse {
         default:
           error = e.message;
       }
+    } else {
+      error = e.toString();
     }
     log.w(error);
     return AppResponse(errorMessage: error);
